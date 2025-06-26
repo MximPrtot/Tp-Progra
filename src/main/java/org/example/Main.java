@@ -14,11 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.example.logica.*;
 public class Main{       
-//        Controladora control = new Controladora();
-//        
-//        List<Vendedor> vendedor = control.traerVendedores();
-//        for(Vendedor e : vendedor)
-//            System.out.println("Pedido: " + e.toString());
+
 public static void main(String[] args) {
         // Asegurarse de ejecutar en el Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {

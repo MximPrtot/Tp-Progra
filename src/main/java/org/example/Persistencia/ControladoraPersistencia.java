@@ -31,24 +31,25 @@ public class ControladoraPersistencia {
              Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
          }
       }
-    public void eliminarCliente(int id) {
-         try {
-             clientej.destroy(BigDecimal.ONE);
-         } catch (IllegalOrphanException | NonexistentEntityException ex) {
-             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        }
+public void eliminarCliente(int id) {
+    try {
+        clientej.destroy(new BigDecimal(id));  // Convertir el int a BigDecimal
+    } catch (IllegalOrphanException | NonexistentEntityException ex) {
+        Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
     
-    public void editarCliente(Cliente cliente) {
-        try {
-            clientej.edit(cliente);
-        } catch (Exception ex) {
-            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+  public void editarCliente(Cliente cliente) {
+    try {
+        clientej.edit(cliente); // Esto debería persistir los cambios en la base de datos
+    } catch (Exception ex) {
+        Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Error al editar cliente", ex);
     }
-    public Cliente traerCliente(int id) {
-        return clientej.findCliente(BigDecimal.ONE);
-    }
+}
+public Cliente traerCliente(int id) {
+    return clientej.findCliente(new BigDecimal(id));  // Convertir el int a BigDecimal
+}
 
     public List<Cliente> traerClientes() {
         return clientej.findClienteEntities();

@@ -23,14 +23,7 @@ public class MainGUI extends JFrame {
     private JTable tablaProductos;
     private JTable tablaPedidos;
     
-//    public MainGUI(Controladora controladora) {
-//        this.controladora = controladora;
-//        initComponents();
-//        setTitle("Sistema de Gestión de Pedidos");
-//        setSize(800, 600);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
-//    }
+
     
     public MainGUI(Controladora controladora) {
     this.controladora = controladora;
@@ -154,14 +147,16 @@ private void actualizarTablaClientes() {
     List<Cliente> clientes = controladora.traerClientes();
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("ID");
-    model.addColumn("Customer ID");
-    model.addColumn("Nombre"); 
+//    model.addColumn("Customer ID");
+//    model.addColumn("Nombre");
+//    model.addColumn("Teléfono");
     
     for (Cliente cliente : clientes) {
         model.addRow(new Object[]{
-            cliente.getId(),
-            cliente.getCustomerID(),
-            cliente.getNombre() 
+            cliente.getId()
+//            cliente.getCustomerID()
+//            cliente.getNombre(),
+//            cliente.getTelefono()
         });
     }
     
@@ -236,57 +231,188 @@ private void actualizarTablaClientes() {
         }
     }
     
+//    private void editarCliente() {
+//        int filaSeleccionada = tablaClientes.getSelectedRow();
+//        if (filaSeleccionada == -1) {
+//            JOptionPane.showMessageDialog(this, "Seleccione un cliente para editar", 
+//                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//        
+//        BigDecimal id = (BigDecimal) tablaClientes.getValueAt(filaSeleccionada, 0);
+//        Cliente cliente = controladora.traerCliente(id.intValue());
+//        
+//        JPanel panel = new JPanel(new GridLayout(3, 2));
+//        
+//        JTextField txtCustomerID = new JTextField(cliente.getCustomerID().toString());
+//        
+//        panel.add(new JLabel("Customer ID:"));
+//        panel.add(txtCustomerID);
+//        
+//        int result = JOptionPane.showConfirmDialog(this, panel, "Editar Cliente", 
+//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//        
+//        if (result == JOptionPane.OK_OPTION) {
+//            try {
+//                cliente.setCustomerID(new BigDecimal(txtCustomerID.getText()));
+//                controladora.editarCliente(cliente);
+//                actualizarTablaClientes();
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, "Error al editar cliente: " + e.getMessage(), 
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
+//    }
+    
+    
     private void editarCliente() {
-        int filaSeleccionada = tablaClientes.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente para editar", 
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+    int filaSeleccionada = tablaClientes.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente para editar", 
+                "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        // Obtener ID del cliente seleccionado
+        Long id = (Long) tablaClientes.getValueAt(filaSeleccionada, 0);
+        
+        // Obtener el cliente de la base de datos
+        Cliente cliente = controladora.traerCliente(id.intValue());
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        BigDecimal id = (BigDecimal) tablaClientes.getValueAt(filaSeleccionada, 0);
-        Cliente cliente = controladora.traerCliente(id.intValue());
-        
+
+        // Panel de edición con campos actuales
         JPanel panel = new JPanel(new GridLayout(3, 2));
         
         JTextField txtCustomerID = new JTextField(cliente.getCustomerID().toString());
+//        JTextField txtNombre = new JTextField(cliente.getNombre());
+//        JTextField txtTelefono = new JTextField(cliente.getTelefono());
         
         panel.add(new JLabel("Customer ID:"));
         panel.add(txtCustomerID);
-        
+//        panel.add(new JLabel("Nombre:"));
+//        panel.add(txtNombre);
+//        panel.add(new JLabel("Teléfono:"));
+//        panel.add(txtTelefono);
+
         int result = JOptionPane.showConfirmDialog(this, panel, "Editar Cliente", 
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        
+
         if (result == JOptionPane.OK_OPTION) {
-            try {
-                cliente.setCustomerID(new BigDecimal(txtCustomerID.getText()));
-                controladora.editarCliente(cliente);
-                actualizarTablaClientes();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al editar cliente: " + e.getMessage(), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            // Actualizar los datos del cliente
+            cliente.setCustomerID(new BigDecimal(txtCustomerID.getText()));
+//            cliente.setNombre(txtNombre.getText());
+//            cliente.setTelefono(txtTelefono.getText());
+            
+            // Guardar cambios
+            controladora.editarCliente(cliente);
+            actualizarTablaClientes();
+            JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente", 
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al editar cliente: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+    
+//private void editarCliente() {
+//    int filaSeleccionada = tablaClientes.getSelectedRow();
+//    if (filaSeleccionada == -1) {
+//        JOptionPane.showMessageDialog(this, "Seleccione un cliente para editar", 
+//                "Advertencia", JOptionPane.WARNING_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        // Obtener ID como Long
+//        Long id = (Long) tablaClientes.getValueAt(filaSeleccionada, 0);
+//        
+//        // Verificar que el cliente existe
+//        Cliente cliente = controladora.traerCliente(id.intValue());
+//        if (cliente == null) {
+//            JOptionPane.showMessageDialog(this, "Cliente no encontrado en la base de datos", 
+//                    "Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        // Panel de edición
+//        JPanel panel = new JPanel(new GridLayout(1, 2));
+//        JTextField txtCustomerID = new JTextField(cliente.getCustomerID().toString());
+//        panel.add(new JLabel("Customer ID:"));
+//        panel.add(txtCustomerID);
+//
+//        int result = JOptionPane.showConfirmDialog(this, panel, "Editar Cliente", 
+//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//
+//        if (result == JOptionPane.OK_OPTION) {
+//            cliente.setCustomerID(new BigDecimal(txtCustomerID.getText()));
+//            controladora.editarCliente(cliente);
+//            actualizarTablaClientes();
+//            JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente", 
+//                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+//        }
+//    } catch (Exception e) {
+//        JOptionPane.showMessageDialog(this, "Error al editar cliente: " + e.getMessage(), 
+//                "Error", JOptionPane.ERROR_MESSAGE);
+//        e.printStackTrace();
+//    }
+//}
+    
+    
+//    private void eliminarCliente() {
+//        int filaSeleccionada = tablaClientes.getSelectedRow();
+//        if (filaSeleccionada == -1) {
+//            JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar", 
+//                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//        
+//        int confirmacion = JOptionPane.showConfirmDialog(this, 
+//                "¿Está seguro que desea eliminar este cliente?", 
+//                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+//        
+//        if (confirmacion == JOptionPane.YES_OPTION) {
+//            BigDecimal id = (BigDecimal) tablaClientes.getValueAt(filaSeleccionada, 0);
+//            controladora.eliminarCliente(id.intValue());
+//            actualizarTablaClientes();
+//        }
+//    }
+    
+private void eliminarCliente() {
+    int filaSeleccionada = tablaClientes.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar", 
+                "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
     }
     
-    private void eliminarCliente() {
-        int filaSeleccionada = tablaClientes.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar", 
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        int confirmacion = JOptionPane.showConfirmDialog(this, 
-                "¿Está seguro que desea eliminar este cliente?", 
-                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            BigDecimal id = (BigDecimal) tablaClientes.getValueAt(filaSeleccionada, 0);
+    // Obtener el ID del cliente seleccionado
+    Long id = (Long) tablaClientes.getValueAt(filaSeleccionada, 0);
+    
+    // Confirmar eliminación
+    int confirmacion = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro que desea eliminar este cliente?\nEsta acción no se puede deshacer.", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+    
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        try {
             controladora.eliminarCliente(id.intValue());
             actualizarTablaClientes();
+            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente", 
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar cliente: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
+}
     
     private void agregarProducto() {
         JPanel panel = new JPanel(new GridLayout(6, 2));
@@ -398,12 +524,62 @@ private void actualizarTablaClientes() {
         }
     }
     
-    private void agregarPedido() {
-        // Implementación similar a los métodos anteriores, pero más compleja
-        // ya que un pedido tiene relaciones con otras entidades
-        JOptionPane.showMessageDialog(this, "Funcionalidad de agregar pedido no implementada aún", 
-                "Información", JOptionPane.INFORMATION_MESSAGE);
+ private void agregarPedido() {
+    JPanel panel = new JPanel(new GridLayout(6, 2));
+    
+    // Obtener listas para combobox
+    List<Cliente> clientes = controladora.traerClientes();
+    List<Producto> productos = controladora.traerProductos();
+    List<Estado> estados = controladora.traerEstados();
+    
+    JComboBox<Cliente> cbCliente = new JComboBox<>(clientes.toArray(new Cliente[0]));
+    JComboBox<Producto> cbProducto = new JComboBox<>(productos.toArray(new Producto[0]));
+    JComboBox<Estado> cbEstado = new JComboBox<>(estados.toArray(new Estado[0]));
+    JTextField txtCantidad = new JTextField();
+    JTextField txtPrecioTotal = new JTextField();
+    
+    panel.add(new JLabel("Cliente:"));
+    panel.add(cbCliente);
+    panel.add(new JLabel("Producto:"));
+    panel.add(cbProducto);
+    panel.add(new JLabel("Estado:"));
+    panel.add(cbEstado);
+    panel.add(new JLabel("Cantidad:"));
+    panel.add(txtCantidad);
+    panel.add(new JLabel("Precio Total:"));
+    panel.add(txtPrecioTotal);
+    
+    int result = JOptionPane.showConfirmDialog(this, panel, "Agregar Pedido", 
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    
+    if (result == JOptionPane.OK_OPTION) {
+        try {
+            Pedido pedido = new Pedido();
+            pedido.setCustomerID((Cliente) cbCliente.getSelectedItem());
+            pedido.setStatusID((Estado) cbEstado.getSelectedItem());
+            
+            // Generar ID (podrías implementar una secuencia)
+            pedido.setPedidoID(new BigDecimal(System.currentTimeMillis() % 10000));
+            
+            // Crear detalle del pedido
+            DetallePedido detalle = new DetallePedido();
+            Producto productoSeleccionado = (Producto) cbProducto.getSelectedItem();
+            detalle.setProductID(productoSeleccionado);
+            detalle.setCantidad(new BigDecimal(txtCantidad.getText()));
+            detalle.setPrecioTotal(txtPrecioTotal.getText());
+            
+            // Establecer relaciones
+            pedido.getDetallePedidoCollection().add(detalle);
+            detalle.setPedidoID(pedido);
+            
+            controladora.crearPedido(pedido);
+            actualizarTablaPedidos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar pedido: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+}
     
     private void editarPedido() {
         JOptionPane.showMessageDialog(this, "Funcionalidad de editar pedido no implementada aún", 
@@ -429,17 +605,42 @@ private void actualizarTablaClientes() {
         }
     }
     
-    private void mostrarResumenVentas() {
-        // Implementar el resumen de ventas basado en los métodos comentados en Controladora
-        StringBuilder resumen = new StringBuilder();
-        resumen.append("Resumen de Ventas:\n");
+ private void mostrarResumenVentas() {
+    List<Pedido> pedidos = controladora.traerPedidos();
+    StringBuilder resumen = new StringBuilder();
+    
+    if (pedidos.isEmpty()) {
+        resumen.append("No hay pedidos registrados.");
+    } else {
+        // Resumen general
+        double totalVentas = pedidos.stream()
+            .mapToDouble(p -> p.getTotalGeneral().doubleValue())
+            .sum();
         
-        // Aquí podrías implementar la lógica para mostrar el resumen
-        // usando los métodos comentados en la clase Controladora
+        resumen.append("Resumen General de Ventas:\n");
+        resumen.append("Total Pedidos: ").append(pedidos.size()).append("\n");
+        resumen.append("Total Ventas: $").append(String.format("%.2f", totalVentas)).append("\n\n");
         
-        JOptionPane.showMessageDialog(this, "Funcionalidad de resumen de ventas no implementada aún", 
-                "Información", JOptionPane.INFORMATION_MESSAGE);
+        // Por cliente
+        resumen.append("Ventas por Cliente:\n");
+        controladora.traerClientes().forEach(cliente -> {
+            double totalCliente = pedidos.stream()
+                .filter(p -> p.getCustomerID().equals(cliente))
+                .mapToDouble(p -> p.getTotalGeneral().doubleValue())
+                .sum();
+            
+            if (totalCliente > 0) {
+                resumen.append(cliente.getNombre())
+                      .append(": $")
+                      .append(String.format("%.2f", totalCliente))
+                      .append("\n");
+            }
+        });
     }
+    
+    JOptionPane.showMessageDialog(this, resumen.toString(), 
+            "Resumen de Ventas", JOptionPane.INFORMATION_MESSAGE);
+}
     
 //    public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> {

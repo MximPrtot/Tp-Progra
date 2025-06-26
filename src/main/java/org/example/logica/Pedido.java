@@ -197,9 +197,14 @@ public Producto getProducto() {
     return null;
 }
 
-    public Object getCantidad() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+ public int getCantidad() {
+    if (this.detallePedidoCollection != null && !this.detallePedidoCollection.isEmpty()) {
+        return this.detallePedidoCollection.stream()
+            .mapToInt(d -> d.getCantidad().intValue())
+            .sum();
     }
+    return 0;
+}
 
     public Object getClsiente() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

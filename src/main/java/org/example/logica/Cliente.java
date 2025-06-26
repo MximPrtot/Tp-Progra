@@ -90,10 +90,6 @@ public String getNombre() {
     return "Cliente " + this.customerID; // O el campo real que tenga el nombre
 }
 
-public String getTelefono() {
-    return ""; // Devuelve el teléfono si tienes ese campo
-}
-
     
     
 }
