@@ -1,19 +1,49 @@
 package org.example;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.example.logica.Controladora;
 import org.example.logica.DetallePedido;
 import org.example.logica.Estado;
 import org.example.logica.Vendedor;
+import javax.swing.SwingUtilities;
+import org.example.Visuales.MainGUI;
+import javax.swing.*;
+import java.awt.*;
+import java.math.BigDecimal;
+import java.util.List;
+import org.example.logica.*;
+public class Main{       
+//        Controladora control = new Controladora();
+//        
+//        List<Vendedor> vendedor = control.traerVendedores();
+//        for(Vendedor e : vendedor)
+//            System.out.println("Pedido: " + e.toString());
+public static void main(String[] args) {
+        // Asegurarse de ejecutar en el Event Dispatch Thread
+        SwingUtilities.invokeLater(() -> {
+            try {
+                Controladora controladora = new Controladora();
+                MainGUI gui = new MainGUI(controladora);
+                gui.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, 
+                    "Error al iniciar la aplicación: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }   
+   
+//        Controladora control = new Controladora();
+//        
+//        List<Vendedor> vendedor = control.traerVendedores();
+//        for(Vendedor e : vendedor)
+//            System.out.println("Pedido: " + e.toString());
 
-public class Main{
-    public static void main(String[] args){
-        
-        Controladora control = new Controladora();
-        
-        List<Vendedor> vendedor = control.traerVendedores();
-        for(Vendedor e : vendedor)
-            System.out.println("Pedido: " + e.toString());
+//        List<Vendedor> vendedor = control.traerVendedores();
+//        for(Vendedor e : vendedor)
+//            System.out.println("Pedido: " + e.toString());
 
 //        Conexion conn = new Conexion();
 //       
@@ -60,7 +90,7 @@ public class Main{
 //            }
             
     }
-}
+
 /*
 ejemplo clase hilo ( las funciones estan en la clase controladora
 public class PedidoThread extends Thread{

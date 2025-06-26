@@ -140,6 +140,30 @@ public String toString() {
            '}';
 }
 
+    public void setNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+ public Long getId() {
+    return this.productID != null ? this.productID.longValue() : null;
+}
+
+public String getNombre() {
+    return this.product; // Usa el campo que contiene el nombre
+}
+
+public Double getPrecio() {
+    try {
+        return Double.parseDouble(this.precioIndividual);
+    } catch (NumberFormatException e) {
+        return 0.0;
+    }
+}
+
+    public Object getStock() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
     
     

@@ -180,7 +180,33 @@ public class Pedido implements Serializable {
             '}';
 }
 
+  public Long getId() {
+    return this.pedidoID != null ? this.pedidoID.longValue() : null;
+}
+
+public Cliente getCliente() {
+    return this.customerID;
+}
+
+public Producto getProducto() {
+    // Necesitarás implementar esto según tu modelo
+    // Si no hay relación directa, puedes obtenerlo del primer detalle
+    if (this.detallePedidoCollection != null && !this.detallePedidoCollection.isEmpty()) {
+        return this.detallePedidoCollection.iterator().next().getProductID();
+    }
+    return null;
+}
+
+    public Object getCantidad() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getClsiente() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
     
     
 }
+    

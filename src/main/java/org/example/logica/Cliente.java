@@ -77,6 +77,23 @@ public class Cliente implements Serializable {
         return "Cliente{" + "customerID=" + customerID + '}';
 }
 
+    public void setNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+  public Long getId() {
+    return this.customerID != null ? this.customerID.longValue() : null;
+}
+
+// Y también implementa estos:
+public String getNombre() {
+    return "Cliente " + this.customerID; // O el campo real que tenga el nombre
+}
+
+public String getTelefono() {
+    return ""; // Devuelve el teléfono si tienes ese campo
+}
+
     
     
 }
