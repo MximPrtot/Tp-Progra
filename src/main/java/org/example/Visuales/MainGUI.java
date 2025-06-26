@@ -75,14 +75,14 @@ public class MainGUI extends JFrame {
         JButton btnAgregarCliente = new JButton("Agregar");
         btnAgregarCliente.addActionListener(e -> agregarCliente());
         
-        JButton btnEditarCliente = new JButton("Editar");
-        btnEditarCliente.addActionListener(e -> editarCliente());
+//        JButton btnEditarCliente = new JButton("Editar");
+//        btnEditarCliente.addActionListener(e -> editarCliente());
         
         JButton btnEliminarCliente = new JButton("Eliminar");
         btnEliminarCliente.addActionListener(e -> eliminarCliente());
         
         panelBotonesClientes.add(btnAgregarCliente);
-        panelBotonesClientes.add(btnEditarCliente);
+//        panelBotonesClientes.add(btnEditarCliente);
         panelBotonesClientes.add(btnEliminarCliente);
         
         panelClientes.add(panelBotonesClientes, BorderLayout.SOUTH);
@@ -100,14 +100,14 @@ public class MainGUI extends JFrame {
         JButton btnAgregarProducto = new JButton("Agregar");
         btnAgregarProducto.addActionListener(e -> agregarProducto());
         
-        JButton btnEditarProducto = new JButton("Editar");
-        btnEditarProducto.addActionListener(e -> editarProducto());
+//        JButton btnEditarProducto = new JButton("Editar");
+//        btnEditarProducto.addActionListener(e -> editarProducto());
         
         JButton btnEliminarProducto = new JButton("Eliminar");
         btnEliminarProducto.addActionListener(e -> eliminarProducto());
         
         panelBotonesProductos.add(btnAgregarProducto);
-        panelBotonesProductos.add(btnEditarProducto);
+        //panelBotonesProductos.add(btnEditarProducto);
         panelBotonesProductos.add(btnEliminarProducto);
         
         panelProductos.add(panelBotonesProductos, BorderLayout.SOUTH);
@@ -125,8 +125,8 @@ public class MainGUI extends JFrame {
         JButton btnAgregarPedido = new JButton("Agregar");
         btnAgregarPedido.addActionListener(e -> agregarPedido());
         
-        JButton btnEditarPedido = new JButton("Editar");
-        btnEditarPedido.addActionListener(e -> editarPedido());
+//        JButton btnEditarPedido = new JButton("Editar");
+//        btnEditarPedido.addActionListener(e -> editarPedido());
         
         JButton btnEliminarPedido = new JButton("Eliminar");
         btnEliminarPedido.addActionListener(e -> eliminarPedido());
@@ -135,7 +135,7 @@ public class MainGUI extends JFrame {
         btnResumenVentas.addActionListener(e -> mostrarResumenVentas());
         
         panelBotonesPedidos.add(btnAgregarPedido);
-        panelBotonesPedidos.add(btnEditarPedido);
+        //panelBotonesPedidos.add(btnEditarPedido);
         panelBotonesPedidos.add(btnEliminarPedido);
         panelBotonesPedidos.add(btnResumenVentas);
         
@@ -204,6 +204,7 @@ private void actualizarTablaClientes() {
         
         tablaPedidos.setModel(model);
     }
+
     
     // Métodos para operaciones CRUD
     private void agregarCliente() {
