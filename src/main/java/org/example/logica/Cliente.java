@@ -9,16 +9,18 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.awt.Font;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import javax.swing.*;
 
 @Entity
 @Table(name = "Cliente")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByCustomerID", query = "SELECT c FROM Cliente c WHERE c.customerID = :customerID")})
-public class Cliente implements Serializable {
+public class Cliente implements Serializable, UsuarioNegocio {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -90,6 +92,24 @@ public String getNombre() {
     return "Cliente " + this.customerID; // O el campo real que tenga el nombre
 }
 
+
+@Override
+    public void mostrarInterfaz() {
+        JFrame frame = new JFrame("Interfaz Cliente - ID: " + customerID);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(300, 150);
+        frame.setLocationRelativeTo(null);
+
+        JLabel label = new JLabel("Bienvenido Cliente con ID: " + customerID, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        frame.getContentPane().add(label);
+
+        frame.setVisible(true);
+    }
+    }
+
+  
     
     
-}
+

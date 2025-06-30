@@ -61,6 +61,7 @@ public class MainGUI extends JFrame {
         actualizarTablaClientes();
         actualizarTablaProductos();
         actualizarTablaPedidos();
+        cargarClientesEnSegundoPlano();
     }
     
     private void crearPanelClientes() {
@@ -143,6 +144,32 @@ public class MainGUI extends JFrame {
     }
     
     // Métodos para actualizar las tablas
+    private void cargarClientesEnSegundoPlano() {
+    SwingWorker<List<Cliente>, Void> worker = new SwingWorker<>() {
+        @Override
+        protected List<Cliente> doInBackground() {
+            return controladora.traerClientes();
+        }
+
+        @Override
+        protected void done() {
+            try {
+                List<Cliente> clientes = get();
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("ID");
+                for (Cliente cliente : clientes) {
+                    model.addRow(new Object[]{ cliente.getCustomerID() });
+                }
+                tablaClientes.setModel(model);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al cargar clientes: " + e.getMessage());
+            }
+        }
+    };
+    worker.execute();
+}
+
 private void actualizarTablaClientes() {
     List<Cliente> clientes = controladora.traerClientes();
     DefaultTableModel model = new DefaultTableModel();
